@@ -6,3 +6,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.ant-menu-submenu-selected::after {
+    border-bottom: 0px solid #1890ff !important;
+}
+
+.ant-menu-submenu-active::after {
+    border-bottom: 0px solid #1890ff !important;
+}
+
+.ant-menu-item::hover {
+    border-bottom: 0px solid #1890ff !important;
+}
