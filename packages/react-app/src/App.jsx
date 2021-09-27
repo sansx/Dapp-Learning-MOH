@@ -467,7 +467,7 @@ function App(props) {
       <Header />
       {networkDisplay}
       <BrowserRouter>
-        <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
+        <Menu style={{ justifyContent: 'center',textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
           <Menu.Item key="/">
             <Link
               onClick={() => {
@@ -602,14 +602,15 @@ function App(props) {
                 this <Contract/> component will automatically parse your ABI
                 and give you a form to interact with it locally
             */}
-
-            <Contract
-              name="N"
-              signer={userSigner}
-              provider={localProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
+            <div style={{ justifyContent: "center" }}>
+              <Contract
+                name="N"
+                signer={userSigner}
+                provider={localProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
+            </div>
           </Route>
 
           <Route path="/transfers">
