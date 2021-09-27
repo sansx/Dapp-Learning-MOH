@@ -51,7 +51,7 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const targetNetwork = NETWORKS.rinkeby; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const targetNetwork = NETWORKS.ropsten; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
@@ -467,7 +467,7 @@ function App(props) {
       <Header />
       {networkDisplay}
       <BrowserRouter>
-        <Menu style={{ justifyContent: 'center', textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
+        <Menu style={{ justifyContent: 'center',textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
           <Menu.Item key="/">
             <Link
               onClick={() => {
@@ -603,13 +603,13 @@ function App(props) {
                 and give you a form to interact with it locally
             */}
             <div style={{ justifyContent: "center" }}>
-            <Contract
-              name="N"
-              signer={userSigner}
-              provider={localProvider}
-              address={address}
-              blockExplorer={blockExplorer}
-            />
+              <Contract
+                name="N"
+                signer={userSigner}
+                provider={localProvider}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
             </div>
           </Route>
 
