@@ -1,11 +1,11 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-
-contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
+import "./deps/@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "./deps/@openzeppelin/contracts/access/Ownable.sol";
+import "./deps/@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "./deps/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+contract N_new is Initializable,ERC721EnumerableUpgradeable, ReentrancyGuard, OwnableUpgradeable {
     uint8[] private units = [
         1,
         2,
@@ -180,7 +180,9 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
         string memory keyPrefix,
         uint8[] memory sourceArray
     ) internal view returns (uint256) {
-        uint256 rand = random(string(abi.encodePacked(keyPrefix, toString(tokenId))));
+        uint256 rand = random(
+            string(abi.encodePacked(keyPrefix, toString(tokenId)))
+        );
         uint256 output = sourceArray[rand % sourceArray.length];
         uint256 luck = rand % 21;
         if (luck > 14) {
@@ -188,7 +190,9 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
         }
         if (luck >= 19) {
             if (luck == 19) {
-                output = (output * multipliers[rand % multipliers.length]) + suffixes[rand % suffixes.length];
+                output =
+                    (output * multipliers[rand % multipliers.length]) +
+                    suffixes[rand % suffixes.length];
             } else {
                 output = (output * multipliers[rand % multipliers.length]);
             }
@@ -196,7 +200,12 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
         return output;
     }
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
         string[17] memory parts;
         parts[
             0
@@ -235,7 +244,17 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
         parts[16] = "</text></svg>";
 
         string memory output = string(
-            abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8])
+            abi.encodePacked(
+                parts[0],
+                parts[1],
+                parts[2],
+                parts[3],
+                parts[4],
+                parts[5],
+                parts[6],
+                parts[7],
+                parts[8]
+            )
         );
         output = string(
             abi.encodePacked(
@@ -264,7 +283,9 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
                 )
             )
         );
-        output = string(abi.encodePacked("data:application/json;base64,", json));
+        output = string(
+            abi.encodePacked("data:application/json;base64,", json)
+        );
 
         return output;
     }
@@ -296,7 +317,11 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
         return string(buffer);
     }
 
-    constructor() ERC721("n", "N") Ownable() {}
+    function init() external initializer {
+        __ERC721Enumerable_init();
+        __Ownable_init();
+    }
+
 }
 
 /// [MIT License]
@@ -304,7 +329,8 @@ contract N is ERC721Enumerable, ReentrancyGuard, Ownable {
 /// @notice Provides a function for encoding some bytes in base64
 /// @author Brecht Devos <brecht@loopring.org>
 library Base64 {
-    bytes internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    bytes internal constant TABLE =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     /// @notice Encodes some bytes to the base64 representation
     function encode(bytes memory data) internal pure returns (string memory) {
@@ -333,11 +359,20 @@ library Base64 {
 
                 let out := mload(add(tablePtr, and(shr(18, input), 0x3F)))
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(shr(12, input), 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(shr(12, input), 0x3F))), 0xFF)
+                )
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(shr(6, input), 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(shr(6, input), 0x3F))), 0xFF)
+                )
                 out := shl(8, out)
-                out := add(out, and(mload(add(tablePtr, and(input, 0x3F))), 0xFF))
+                out := add(
+                    out,
+                    and(mload(add(tablePtr, and(input, 0x3F))), 0xFF)
+                )
                 out := shl(224, out)
 
                 mstore(resultPtr, out)
