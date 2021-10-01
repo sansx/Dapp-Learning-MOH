@@ -551,6 +551,7 @@ function App() {
                 bordered
                 dataSource={Ns}
                 renderItem={item => {
+                  console.log(item);
                   const id = item.id.toNumber();
                   return (
                     <List.Item key={id + "_" + item.uri + "_" + item.owner}>
@@ -564,7 +565,7 @@ function App() {
                         <div style={{ width: "300px", height: "300px" }}>
                           <div dangerouslySetInnerHTML={{ __html: item.svg }} />
                           {/* {item.svg} */}
-                          {/* <img src={item.image} style={{ maxWidth: 150 }} /> */}
+                          {/* <img src={item.uri} alt="" style={{ maxWidth: 150, height: "150px", width: "150px" }} /> */}
                         </div>
                         <div>{item.description}</div>
 
@@ -579,7 +580,17 @@ function App() {
                             icon={<DownloadOutlined />}
                             style={{ marginTop: "16px" }}
                           >
-                            download
+                            download .SVG
+                          </Button>
+                        </a>
+                        <a download={item.name + ".json"} href={item.uri}>
+                          <Button
+                            type="primary"
+                            shape="round"
+                            icon={<DownloadOutlined />}
+                            style={{ marginTop: "16px" }}
+                          >
+                            download uri
                           </Button>
                         </a>
                       </Card>
