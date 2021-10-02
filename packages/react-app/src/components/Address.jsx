@@ -1,4 +1,4 @@
-import { Skeleton, Typography } from "antd";
+import { Skeleton, Typography, Tooltip } from "antd";
 import React from "react";
 import Blockies from "react-blockies";
 import { useThemeSwitcher } from "react-css-theme-switcher";
@@ -106,9 +106,12 @@ export default function Address(props) {
 
   return (
     <span>
-      <span style={{ verticalAlign: "middle" }}>
-        <Blockies seed={address.toLowerCase()} size={8} scale={props.fontSize ? props.fontSize / 7 : 4} />
-      </span>
+      <Tooltip placement="bottom" title={address}>
+        <span style={{ verticalAlign: "middle" }}>
+          <Blockies seed={address.toLowerCase()} size={8} scale={props.fontSize ? props.fontSize / 7 : 4} />
+        </span>
+      </Tooltip>
+
       <span style={{ verticalAlign: "middle", paddingLeft: 5, fontSize: props.fontSize ? props.fontSize : 28 }}>
         {text}
       </span>
