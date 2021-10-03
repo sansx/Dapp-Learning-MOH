@@ -8,3 +8,8 @@ yarn run generate
 yarn deploy
 yarn start
 ```
+
+## 分析编译后的前端代码
+```
+yarn analyze
+```
