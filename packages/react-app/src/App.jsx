@@ -117,6 +117,7 @@ const localProvider = new ethers.providers.StaticJsonRpcProvider(localProviderUr
 
 // IMPORTANT PLACE
 const backend = "https://taishang.leeduckgo.com/taishang/api/v1/parse?handler_id=1&type=n";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 // 🔭 block explorer URL
 const blockExplorer = targetNetwork.blockExplorer;
@@ -244,6 +245,7 @@ function App() {
             url: backend,
             data: {
               token_uri: tokenURI,
+              base_url: baseURL,
             },
             headers: {
               "Content-Type": "application/json",
@@ -581,16 +583,6 @@ function App() {
                             style={{ marginTop: "16px" }}
                           >
                             download .SVG
-                          </Button>
-                        </a>
-                        <a download={item.name + ".json"} href={item.uri}>
-                          <Button
-                            type="primary"
-                            shape="round"
-                            icon={<DownloadOutlined />}
-                            style={{ marginTop: "16px" }}
-                          >
-                            download uri
                           </Button>
                         </a>
                       </Card>
