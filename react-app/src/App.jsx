@@ -20,6 +20,8 @@ import {
   useOnBlock,
   useUserSigner,
 } from "./hooks";
+import { rarityImage, rarityImageFromItems, lootRarity, rarityDescription } from "loot-rarity";
+import loot from "./data/loot.json"
 
 const { ethers } = require("ethers");
 
@@ -33,6 +35,13 @@ const targetNetwork = NETWORKS.matic_mumbai;
 // 🛰 providers
 if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
 
+const bags = loot.map((loot, index) => {
+  const [items] = Object.values(loot);
+  return {
+    id: String(index + 1),
+    items: Object.values(items),
+  };
+})
 
 // Using StaticJsonRpcProvider as the chainId won't change see https://github.com/ethers-io/ethers.js/issues/901
 const scaffoldEthProvider = navigator.onLine
@@ -50,8 +59,9 @@ if (DEBUG) console.log("🏠 Connecting to provider:", localProviderUrlFromEnv);
 const localProvider = new ethers.providers.StaticJsonRpcProvider(localProviderUrlFromEnv);
 
 // IMPORTANT PLACE
-const backend = "http://127.0.0.1:4000/taishang/api/v1/parse?handler_id=1&type=n";
-const baseURL = process.env.REACT_APP_BASE_URL;
+// const backend = "http://127.0.0.1:4000/taishang/api/v1/parse?handler_id=1&type=n";
+// const backend = "https://taishang.leeduckgo.com/taishang/api/v1/parse?handler_id=1&type=n";
+// const baseURL = process.env.REACT_APP_BASE_URL;
 
 // 🔭 block explorer URL
 const blockExplorer = targetNetwork.blockExplorer;
@@ -159,39 +169,11 @@ function App() {
           const tokenURI = await readContracts.N.tokenURI(tokenId);
           console.log("tokenURI", tokenURI);
           // TODO: Optimize
-          let svg;
           // const svg = get_svg(tokenURI);
           // const svg = decodeTokenURI(tokenURI);
           // const ipfsHash = tokenURI.replace("https://ipfs.io/ipfs/", "");
           // console.log("ipfsHash", ipfsHash);
-          axios({
-            method: "post",
-            url: backend,
-            data: {
-              token_uri: tokenURI,
-              base_url: baseURL,
-            },
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then(response => {
-              svg = window.atob(response.data.result.image);
-
-              console.log(svg);
-              try {
-                // const jsonManifest = JSON.parse(jsonManifestBuffer.toString());
-                // console.log("jsonManifest", jsonManifest);
-                collectibleUpdate.push({ id: tokenId, uri: tokenURI, svg, owner: address });
-              } catch (e) {
-                console.log(e);
-              }
-            })
-            .catch(error => {
-              console.log(error);
-            });
-
-          // const jsonManifestBuffer = await getFromIPFS(ipfsHash);
+          collectibleUpdate.push({ id: tokenId, uri: tokenURI, owner: address });
         } catch (e) {
           console.log(e);
         }
@@ -372,6 +354,14 @@ function App() {
   }
 
   const [transferToAddresses, setTransferToAddresses] = useState({});
+  const getLootInfo = (id) => {
+    let target = bags[ id - 1].items;
+    return {
+      items: target,
+      level: rarityDescription(lootRarity(target)),
+      image:rarityImageFromItems(target,{displayItemLevels: true, displayLootLevel: true })
+    }
+  }
 
   return (
     <div className="App">
@@ -420,7 +410,7 @@ function App() {
                 bordered
                 dataSource={Ns}
                 renderItem={item => {
-                  console.log(item);
+                  // console.log(item);
                   const id = item.id.toNumber();
                   return (
                     <List.Item key={id + "_" + item.uri + "_" + item.owner}>
@@ -432,15 +422,15 @@ function App() {
                         }
                       >
                         <div style={{ width: "300px", height: "300px" }}>
-                          <div dangerouslySetInnerHTML={{ __html: item.svg }} />
+                          {/* <div dangerouslySetInnerHTML={{ __html: item.svg }} /> */}
                           {/* {item.svg} */}
-                          {/* <img src={item.uri} alt="" style={{ maxWidth: 150, height: "150px", width: "150px" }} /> */}
+                          <img src={ getLootInfo(item.id.toNumber()).image } alt="" style={{ height: "100%", width: "100%" }} />
                         </div>
                         <div>{item.description}</div>
 
                         <a
-                          download={item.name + ".svg"}
-                          href={`data:text/plain;charset=utf-8,${encodeURIComponent(item.svg)}`}
+                          download={getLootInfo(item.id.toNumber()).level + item.id.toNumber() + ".svg"}
+                          href={getLootInfo(item.id.toNumber()).image}
                           // href={item.uri}
                         >
                           <Button
@@ -449,7 +439,7 @@ function App() {
                             icon={<DownloadOutlined />}
                             style={{ marginTop: "16px" }}
                           >
-                            download .SVG
+                            download {`${getLootInfo(item.id.toNumber()).level}_${item.id.toNumber()}`}.SVG
                           </Button>
                         </a>
                       </Card>

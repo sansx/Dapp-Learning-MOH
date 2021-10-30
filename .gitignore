@@ -6,14 +6,17 @@ packages/hardhat/*.txt
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/node_modules
-packages/hardhat/artifacts*
-packages/hardhat/contracts/artifacts/
-packages/hardhat/deployments
-packages/react-app/src/contracts/*
-!packages/react-app/src/contracts/external_contracts.js
-packages/hardhat/cache*
+hardhat/artifacts*
+hardhat/contracts/artifacts/
+hardhat/deployments
+react-app/src/contracts/*
+react-app/src/contracts/external_contracts.js
+hardhat/cache*
 
-packages/**/data
+hardhat/contract_address.json
+
+**/data
+**/deployments
 
 packages/subgraph/config/config.json
 tenderly.yaml
