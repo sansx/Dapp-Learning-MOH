@@ -88,4 +88,4 @@ yarn start
 
 - Display NFT  
 前端界面上选择 "Ns", 就可以看到当前属于这个账户的 Loot NFT.  
-![Contract-Interactor](./images/Display_loot.png)  
+![Contract-Interactor](./images/Display_loots.png)  
