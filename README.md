@@ -3,39 +3,6 @@
 Dapp-Learning-MOH 项目旨在提供发放 Dapp-Learning 的荣誉勋章的功能模版, 社区开发者可以根据此模版进行修改升级, 以实现符合自身业务的功能需求. 
 
 ## 操作步骤  
-- 安装 elixir  
-以 macos 为例, 其他操作系统可参考 [elixir 官网](https://elixir-lang.org/install.html#macos)
-```
-brew install elixir
-```
-
-- 安装 && 启动 postgresql   
-可参考 [教程](https://www.runoob.com/postgresql/mac-install-postgresql.html) 进行对应安装.  
-注意这里安装 postgresql 的时候需要设置 postgresql 用户密码为 postgresql , 避免影响后续本地 nft-parser 服务启动. 
-
-- 启动 nft-parser 服务  
-如果不想使用 nft-parser 本地服务, 可以跳过此步骤, 但需要在启动 react 前修改 react 配置, 后续有相应说明  
-```shell 
-## 进入到 nft-parser 目录
-cd nft-parser 
-
-## 安装对应依赖  
-mix deps.get
-
-## 更新 
-mix deps.update --all
-
-## 安装数据库 
-mix ecto.setup 
-
-## 安装 assets 依赖 
-cd assets 
-yarn
-
-## 启动服务 
-cd ..
-mix phx.server
-```
 
 - 修改部署网络  
 1. 默认合约是部署在测试网络, 如果需要部署在其他网络, 需要修改合约部署脚本.  
