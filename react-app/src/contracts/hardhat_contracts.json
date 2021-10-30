@@ -5,7 +5,7 @@
       "chainId": "80001",
       "contracts": {
         "N": {
-          "address": "0x4ebc2C0FD894D05B47C1c148169e21dA5B79Be8e",
+          "address": "0x81CDc9Fd7dE8100c53A096a3418885Ae3BFb28E8",
           "abi": [
             {
               "anonymous": false,
@@ -625,7 +625,7 @@
           ]
         },
         "ProxyAdminMOH": {
-          "address": "0x98ce1806CAd0c6c7d49548774E666e02B18b0dA0",
+          "address": "0xC7d52cCF7954274123E4ED889F6A877FE7873262",
           "abi": [
             {
               "anonymous": false,
@@ -779,7 +779,7 @@
           ]
         },
         "TransparentUpgradeableProxyMOH": {
-          "address": "0x4ebc2C0FD894D05B47C1c148169e21dA5B79Be8e",
+          "address": "0x81CDc9Fd7dE8100c53A096a3418885Ae3BFb28E8",
           "abi": [
             {
               "inputs": [
