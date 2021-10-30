@@ -13,6 +13,8 @@ react-app/src/contracts/*
 react-app/src/contracts/external_contracts.js
 hardhat/cache*
 
+hardhat/contract_address.json
+
 **/data
 **/deployments
 
