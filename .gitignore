@@ -15,7 +15,6 @@ hardhat/cache*
 
 hardhat/contract_address.json
 
-**/data
 **/deployments
 
 packages/subgraph/config/config.json
@@ -34,7 +33,7 @@ build
 
 # misc
 .DS_Store
-.env*
+.env
 
 # debug
 npm-debug.log*
